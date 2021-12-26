@@ -3,7 +3,9 @@ import { AppBar, Toolbar, Typography, Button, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logoo.png";
 import { Link } from "react-router-dom";
-
+import {firebaseAuth} from '../realbackend/firebase';
+import {  signOut } from "firebase/auth";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     // flexGrow: 1,
@@ -37,8 +39,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar(props) {
+  const history = useHistory();
   const classes = useStyles();
-  const { logout } = props;
+  const logout =()=>{
+    signOut(firebaseAuth);
+    console.log("logginout");
+     
+    history.push("/loginpage");
+  } 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
